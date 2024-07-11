@@ -1,6 +1,6 @@
 # Frontend Project
 
-This is the frontend part of the project, built using SvelteKit, Tailwind CSS, and Shadcn. The application is deployed on Cloudflare Pages and uses Cloudflare for DNS, domain management, SSL certificates, and CI/CD, with GitHub for version control.
+This is the frontend part of the nolatech job challange, the api is: [Nolatech Backend APi](https://github.com/acidlake/nolatech-backend-api) , built using SvelteKit, Tailwind CSS, and Shadcn. The application is deployed on Cloudflare Pages and uses Cloudflare for DNS, domain management, SSL certificates, and CI/CD, with GitHub for version control.
 
 ## Table of Contents
 
@@ -78,10 +78,10 @@ During development, you can use the following commands:
 
 The project is set up to be deployed on Cloudflare Pages. Follow these steps to deploy:
 
-	1.	Connect the repository to Cloudflare Pages:
-	•	Log in to Cloudflare and navigate to the Pages section.
-	•	Click on “Create a project” and connect your GitHub repository.
-	•	Configure the build settings:
-	•	Framework preset: SvelteKit
-	•	Build command: npm run build
-	•	Build output directory: build
+- Connect the repository to Cloudflare Pages:
+- Log in to Cloudflare and navigate to the Pages section.
+- Click on “Create a project” and connect your GitHub repository.
+- Configure the build settings:
+- Framework preset: SvelteKit
+- Build command: npm run build
+- Build output directory: build
