@@ -78,10 +78,10 @@ During development, you can use the following commands:
 
 The project is set up to be deployed on Cloudflare Pages. Follow these steps to deploy:
 
-	1.	Connect the repository to Cloudflare Pages:
-	•	Log in to Cloudflare and navigate to the Pages section.
-	•	Click on “Create a project” and connect your GitHub repository.
-	•	Configure the build settings:
-	•	Framework preset: SvelteKit
-	•	Build command: npm run build
-	•	Build output directory: build
+- Connect the repository to Cloudflare Pages:
+- Log in to Cloudflare and navigate to the Pages section.
+- Click on “Create a project” and connect your GitHub repository.
+- Configure the build settings:
+- Framework preset: SvelteKit
+- Build command: npm run build
+- Build output directory: build
