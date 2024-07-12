@@ -1,8 +1,13 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button';
+	import { DashboardPage } from '@/components/modules/dashboard/';
+
+	export let data;
+
+	$: ({ users } = data.streamed);
 </script>
 
-'Logged In'
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
-<Button>Button</Button>
+{#await users}
+	<div class="flex items-center justify-center">Cargando...</div>
+{:then data}
+	<DashboardPage {data} />
+{/await}
