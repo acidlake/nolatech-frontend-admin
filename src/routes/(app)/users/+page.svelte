@@ -39,7 +39,7 @@
 	<p>Loading...</p>
 {:then data}
 	<div class="flex flex-col gap-2">
-		<div class="flex items-center justify-between">
+		<div class="flex items-center justify-between py-4">
 			<h1 class="text-3xl">Usuarios</h1>
 			<Button on:click={() => goto('/users/create')}>Agregar usuario</Button>
 		</div>

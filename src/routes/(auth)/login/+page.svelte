@@ -11,7 +11,9 @@
 		password: ''
 	};
 
-	$: error = null;
+	let error = '';
+
+	let isLoading: boolean = false;
 
 	function handleAddCredentials(user: boolean) {
 		const demoPassword: string = 'thepassword123#$';
@@ -25,21 +27,23 @@
 	}
 
 	const handleSubmit: EventHandler<SubmitEvent> = async (event) => {
+		isLoading = true;
 		event.preventDefault();
-		error = null;
 		try {
 			const token = await authService.createIdentificationSession(loginUserData);
 			authToken.set(token);
-			goto('/dashboard');
+			goto('/dashboard', { replaceState: true });
+			error = '';
+			isLoading = false;
 		} catch (error) {
+			isLoading = false;
 			error = error || 'Failed to login';
+			error = 'Failed to login';
 		}
 	};
-
-	$: console.log('error', error);
 </script>
 
-<UserAuthForm bind:loginUserData {handleAddCredentials} {handleSubmit} />
+<UserAuthForm bind:loginUserData {handleAddCredentials} {handleSubmit} bind:isLoading />
 
 {#if error}
 	<p class="text-center text-red-500">{error}</p>
