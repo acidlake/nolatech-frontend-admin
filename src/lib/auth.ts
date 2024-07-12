@@ -18,7 +18,9 @@ class AuthServiceUtil {
         try {
             const response = await fetch(`${API_URL}/auth/login`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(data)
             });
 
@@ -44,7 +46,7 @@ class AuthServiceUtil {
     public async listUsers(page: number, limit: number, sort: string): Promise<UserPaginationData> {
         const token = this.getAuthToken();
         const response = await fetch(`${API_URL}/users?page=${page}&limit=${limit}&sort=${sort}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
         });
 
         if (!response.ok) {
@@ -55,10 +57,26 @@ class AuthServiceUtil {
         return await response.json();
     }
 
+    async createUser(newUser: User): Promise<string> {
+        const token = this.getAuthToken();
+        const response = await fetch(`${API_URL}/users`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify(newUser)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to create user');
+        }
+
+        return await response.text();
+    }
+
     public async getUser(id: string): Promise<User> {
         const token = this.getAuthToken();
         const response = await fetch(`${API_URL}/users/${id}`, {
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
         });
 
         if (!response.ok) {
@@ -88,11 +106,11 @@ class AuthServiceUtil {
         return await response.json();
     }
 
-    public async deleteUser(id: string): Promise<User> {
+    public async deleteUser(id: string): Promise<string> {
         const token = this.getAuthToken();
         const response = await fetch(`${API_URL}/users/${id}`, {
             method: 'DELETE',
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
         });
 
         if (!response.ok) {
@@ -100,7 +118,7 @@ class AuthServiceUtil {
             throw new Error(error.message || 'Failed to delete user');
         }
 
-        return await response.json();
+        return await response.text();
     }
 
 }

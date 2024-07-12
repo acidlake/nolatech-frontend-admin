@@ -52,5 +52,6 @@ export interface IUserInterface {
 	listUsers: (page: number, limit: number, sort: string) => Promise<UserPaginationData>;
 	getUser: (id: string) => Promise<User>;
 	updateUser: (id: string, user: User) => Promise<User>;
-	deleteUser: (id: string) => Promise<User>;
+	deleteUser: (id: string) => Promise<string>;
+	createUser: (user: User) => Promise<string>;
 }

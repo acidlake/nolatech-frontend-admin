@@ -22,7 +22,11 @@ class UserService implements IUserInterface {
         return await authService.updateUser(id, user);
     }
 
-    async deleteUser(id: string): Promise<User> {
+    async createUser(user: User): Promise<string> {
+        return await authService.createUser(user);
+    }
+
+    async deleteUser(id: string): Promise<string> {
         return await authService.deleteUser(id);
     }
 }
