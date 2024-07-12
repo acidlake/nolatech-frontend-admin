@@ -13,20 +13,10 @@
 
 <div class="flex items-center justify-between space-y-2">
 	<h2 class="text-3xl font-bold tracking-tight">Dashboard</h2>
-	<div class="flex items-center space-x-2">
-		<DatePickerWithRange />
-		<Button size="sm">
-			<Download class="mr-2 h-4 w-4" />
-			Download
-		</Button>
-	</div>
 </div>
 <Tabs.Root value="overview" class="space-y-4">
 	<Tabs.List>
 		<Tabs.Trigger value="overview">Overview</Tabs.Trigger>
-		<Tabs.Trigger value="analytics" disabled>Analytics</Tabs.Trigger>
-		<Tabs.Trigger value="reports" disabled>Reports</Tabs.Trigger>
-		<Tabs.Trigger value="notifications" disabled>Notifications</Tabs.Trigger>
 	</Tabs.List>
 	<Tabs.Content value="overview" class="space-y-4">
 		<div class="grid gap-4">

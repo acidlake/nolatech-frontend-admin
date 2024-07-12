@@ -9,6 +9,7 @@
 	export let loginUserData: LoginDataType;
 	export let handleAddCredentials: (user: boolean) => void;
 	export let handleSubmit: EventHandler<SubmitEvent>;
+	export let isLoading: boolean = false;
 </script>
 
 <div class="grid gap-2">
@@ -28,7 +29,12 @@
 		</div>
 		<Input id="password" type="password" bind:value={loginUserData.password} required />
 	</div>
-	<Button type="submit" class="w-full">Login</Button>
+	<Button
+		type="submit"
+		disabled={isLoading}
+		class="{isLoading ? 'cursor-wait' : 'cursor-pointer'} mt-4 w-full"
+		>{isLoading ? 'Loading...' : 'Login'}</Button
+	>
 	<div class="mt-4 flex w-full flex-col rounded-lg border bg-gray-50 p-4 py-2 text-gray-600">
 		<h3 class="font-semibold">Demo credentials:</h3>
 		<div class="flex flex-col items-start gap-1 pt-2 text-sm">

@@ -13,55 +13,70 @@
 		password: ''
 	};
 
-	let error = null;
+	let error = '';
+	let isLoading = false;
 
 	async function handleSubmit(event: SubmitEvent) {
+		isLoading = true;
 		event.preventDefault();
 		try {
 			const createdUser = await userService.createUser(newUser);
-			console.log('User created:', createdUser);
-			// Optionally, navigate to a success page or reload user list
-			goto('/users'); // Navigate to users page after successful creation
+			goto('/users', { replaceState: true });
 		} catch (error) {
+			isLoading = false;
 			console.error('Error creating user:', error);
 			error = error.message || 'Failed to create user';
 		}
 	}
+
+	function handleCancel() {
+		goto('/users', { replaceState: true });
+	}
 </script>
 
-<form on:submit|preventDefault={handleSubmit} class="mt-4">
+<form on:submit|preventDefault={handleSubmit} class="mt-4 flex flex-col gap-4">
 	<div class="grid gap-2">
 		<div class="flex items-center">
-			<Label for="firstName">First Name</Label>
+			<Label for="firstName" class="font-bold">Nombre</Label>
 		</div>
 		<Input id="firstName" type="text" bind:value={newUser.firstName} required />
 	</div>
 	<div class="grid gap-2">
 		<div class="flex items-center">
-			<Label for="lastName">Last Name</Label>
+			<Label for="lastName" class="font-bold">Apellidos</Label>
 		</div>
 		<Input id="lastName" type="text" bind:value={newUser.lastName} required />
 	</div>
 	<div class="grid gap-2">
 		<div class="flex items-center">
-			<Label for="username">Username</Label>
+			<Label for="username" class="font-bold">Nombre de Usuario</Label>
 		</div>
 		<Input id="username" type="text" bind:value={newUser.username} required />
 	</div>
 	<div class="grid gap-2">
 		<div class="flex items-center">
-			<Label for="email">Email</Label>
+			<Label for="email" class="font-bold">Email</Label>
 		</div>
 		<Input id="email" type="email" bind:value={newUser.email} required />
 	</div>
 	<div class="grid gap-2">
 		<div class="flex items-center">
-			<Label for="password">Password</Label>
+			<Label for="password" class="font-bold">Password</Label>
 		</div>
 		<Input id="password" type="password" bind:value={newUser.password} required />
 	</div>
 	{#if error}
 		<p class="text-red-500">{error}</p>
 	{/if}
-	<Button type="submit" class="mt-4 w-full">Create User</Button>
+	<div class="flex justify-between gap-4 lg:gap-10">
+		<Button on:click={handleCancel} type="button" variant="outline" class="mt-4 w-full"
+			>Cancelar</Button
+		>
+		<Button
+			type="submit"
+			disabled={isLoading}
+			class="mt-4 w-full {isLoading ? 'cursor-wait' : 'cursor-pointer'}"
+			>{isLoading ? 'Loading...' : 'Crear'}</Button
+		>
+	</div>
 </form>

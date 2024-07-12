@@ -17,7 +17,8 @@
 		password: ''
 	};
 
-	let error = null;
+	let error = '';
+	let isLoading: boolean = false;
 
 	$: if (id) {
 		getUser(id);
@@ -36,40 +37,54 @@
 	}
 
 	async function handleSubmit(event: SubmitEvent) {
+		isLoading = true;
 		event.preventDefault();
-		error = null;
+		error = '';
 		try {
 			if (id) {
 				await userService.updateUser(id, newUser);
-				goto('/users');
+				goto('/users', { replaceState: true });
 			}
 		} catch (err) {
+			isLoading = false;
 			error = err.message || 'Failed to save user';
 		}
 	}
 
-	$: console.log(newUser);
+	async function handleCancel() {
+		goto('/users', { replaceState: true });
+	}
 </script>
 
 {#await getUser(id)}
 	<p>Loading...</p>
 {:then data}
-	<form on:submit|preventDefault={handleSubmit} class="mt-4">
+	<form on:submit|preventDefault={handleSubmit} class="mt-4 flex flex-col gap-4">
 		<div class="grid gap-2">
 			<div class="flex items-center">
-				<Label for="firstName">First Name</Label>
+				<Label for="firstName" class="font-bold">First Name</Label>
 			</div>
 			<Input id="firstName" type="text" bind:value={newUser.firstName} required />
 		</div>
 		<div class="grid gap-2">
 			<div class="flex items-center">
-				<Label for="lastName">Last Name</Label>
+				<Label for="lastName" class="font-bold">Last Name</Label>
 			</div>
 			<Input id="lastName" type="text" bind:value={newUser.lastName} required />
 		</div>
 		{#if error}
 			<p class="text-red-500">{error}</p>
 		{/if}
-		<Button type="submit" class="mt-4 w-full">{id ? 'Update User' : 'Create User'}</Button>
+		<div class="flex justify-between gap-4 lg:gap-10">
+			<Button on:click={() => goto('/users')} type="button" variant="outline" class="mt-4 w-full"
+				>Cancelar</Button
+			>
+			<Button
+				type="submit"
+				disabled={isLoading}
+				class="mt-4 w-full {isLoading ? 'cursor-wait' : 'cursor-pointer'}"
+				>{isLoading ? 'Loading...' : 'Actualizar'}</Button
+			>
+		</div>
 	</form>
 {/await}
