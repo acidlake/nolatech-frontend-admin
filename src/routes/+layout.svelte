@@ -1,5 +1,10 @@
-<script>
+<script lang="ts">
+	import { browser } from '$app/environment';
+	import Seo from '@/components/shared/seo.svelte';
 	import '../app.css';
 </script>
 
-<slot></slot>
+{#if browser}
+	<Seo />
+	<slot></slot>
+{/if}
